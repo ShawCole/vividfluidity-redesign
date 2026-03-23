@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivid Fluidity — Ashley Orianna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --fg: #f0ece6;
+            --accent: #d4a574;
+            --accent2: #e8836b;
+            --muted: #888;
+            --card-bg: #141414;
+            --border: #222;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.2rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--muted); transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--fg); }
+
+        .hamburger {
+            display: none; cursor: pointer;
+            flex-direction: column; gap: 5px;
+        }
+        .hamburger span {
+            width: 24px; height: 2px;
+            background: var(--fg); transition: 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1c78cd54-49e7-41e2-beb6-3f96ca7c26c3/1%28WEB%29.jpg') center/cover no-repeat;
+            filter: brightness(0.3); transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1.05); }
+            to { transform: scale(1.15); }
+        }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center; max-width: 800px; padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700; line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem; color: var(--muted);
+            max-width: 600px; margin: 0 auto 2.5rem;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-block; padding: 0.9rem 2.5rem;
+            border: 1px solid var(--accent); color: var(--accent);
+            text-transform: uppercase; letter-spacing: 0.15em;
+            font-size: 0.8rem; font-weight: 600;
+            transition: all 0.3s; border-radius: 2px;
+        }
+        .hero-cta:hover {
+            background: var(--accent); color: var(--bg);
+        }
+
+        .scroll-indicator {
+            position: absolute; bottom: 2rem; left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        .scroll-indicator span {
+            display: block; width: 20px; height: 20px;
+            border-right: 2px solid var(--muted);
+            border-bottom: 2px solid var(--muted);
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* SECTIONS */
+        section { padding: 6rem 2rem; }
+
+        .section-header {
+            text-align: center; margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--muted); max-width: 500px;
+            margin: 0 auto; font-weight: 300;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--accent); margin-bottom: 1rem;
+        }
+
+        /* ABOUT */
+        .about { max-width: 1200px; margin: 0 auto; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: center;
+        }
+
+        .about-image {
+            position: relative; border-radius: 4px; overflow: hidden;
+            aspect-ratio: 3/4;
+        }
+
+        .about-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .about-image:hover img { transform: scale(1.03); }
+
+        .about-image::after {
+            content: ''; position: absolute; inset: 0;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            transform: translate(12px, 12px);
+            z-index: -1;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem; margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--muted); font-weight: 300;
+            margin-bottom: 1rem; line-height: 1.8;
+        }
+
+        .about-text .stat-row {
+            display: flex; gap: 3rem; margin-top: 2rem;
+            padding-top: 2rem; border-top: 1px solid var(--border);
+        }
+
+        .stat-row .stat h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; color: var(--accent);
+        }
+
+        .stat-row .stat p {
+            font-size: 0.85rem; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* GALLERY GRID */
+        .gallery-section { max-width: 1400px; margin: 0 auto; }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative; overflow: hidden;
+            border-radius: 4px; aspect-ratio: 4/5;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s, filter 0.6s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05); filter: brightness(0.7);
+        }
+
+        .gallery-overlay {
+            position: absolute; inset: 0;
+            display: flex; align-items: flex-end;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        .gallery-overlay span {
+            font-size: 0.85rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* SERVICES CARDS */
+        .services-section { max-width: 1200px; margin: 0 auto; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px; overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .service-card-img {
+            height: 220px; overflow: hidden;
+        }
+
+        .service-card-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-card:hover .service-card-img img {
+            transform: scale(1.05);
+        }
+
+        .service-card-body {
+            padding: 1.5rem;
+        }
+
+        .service-card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; margin-bottom: 0.5rem;
+        }
+
+        .service-card-body p {
+            color: var(--muted); font-size: 0.9rem;
+            font-weight: 300; line-height: 1.7;
+        }
+
+        .service-card-body .card-link {
+            display: inline-block; margin-top: 1rem;
+            font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--accent); transition: color 0.3s;
+        }
+
+        .service-card-body .card-link:hover { color: var(--accent2); }
+
+        /* HOUSE SITTING */
+        .housesitting-section { max-width: 1200px; margin: 0 auto; }
+
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .pet-card {
+            position: relative; overflow: hidden;
+            border-radius: 8px; aspect-ratio: 1;
+        }
+
+        .pet-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .pet-card:hover img { transform: scale(1.05); }
+
+        /* CONTACT */
+        .contact-section {
+            max-width: 800px; margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-section .contact-img {
+            width: 200px; height: 200px;
+            margin: 0 auto 2rem;
+            border-radius: 50%; overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+
+        .contact-section .contact-img img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .contact-links {
+            display: flex; gap: 1.5rem;
+            justify-content: center; flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-links a {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem; font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .contact-links a:hover {
+            border-color: var(--accent); color: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p { color: var(--muted); font-size: 0.85rem; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.active {
+                display: flex; flex-direction: column;
+                position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10,10,10,0.95);
+                backdrop-filter: blur(20px);
+                padding: 2rem; gap: 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-image { max-width: 400px; margin: 0 auto; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            section { padding: 4rem 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            .stat-row { flex-direction: column; gap: 1.5rem; }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .fade-in.visible {
+            opacity: 1; transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">Vivid <span>Fluidity</span></a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#photography">Photography</a>
+            <a href="#services">Services</a>
+            <a href="#housesitting">Housesitting</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>Ashley <span class="highlight">Orianna</span></h1>
+            <p>A serial entrepreneur and business owner in the entertainment industry with a personal drive for sustainability and low impact living.</p>
+            <a href="#about" class="hero-cta">Explore</a>
+        </div>
+        <div class="scroll-indicator"><span></span></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+        <div class="about-grid fade-in">
+            <div class="about-image">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1685000404728-7OGOTIPT45EGW1GNF6US/Ash_VIA_Galleribillede_WEB.jpg" alt="Ashley Orianna">
+            </div>
+            <div class="about-text">
+                <span class="section-label">About</span>
+                <h2>Entrepreneur. Performer. Creator.</h2>
+                <p>Ashley is a serial entrepreneur and business owner in the entertainment industry with a personal drive for sustainability and low impact living.</p>
+                <p>From photography and fire performance to fitness and house sitting, Ashley brings creativity and passion to every venture — building businesses that blend artistry with purpose.</p>
+                <div class="stat-row">
+                    <div class="stat">
+                        <h3>5+</h3>
+                        <p>Ventures</p>
+                    </div>
+                    <div class="stat">
+                        <h3>10+</h3>
+                        <p>Years in Entertainment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHOTOGRAPHY -->
+    <section id="photography" class="gallery-section">
+        <div class="section-header fade-in">
+            <span class="section-label">Portfolio</span>
+            <h2>Photography</h2>
+            <p>Capturing moments with intention and artistry</p>
+        </div>
+        <div class="gallery-grid fade-in">
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646948638006-Y4NS2SCPO5CTWBB8PZTT/190729_Graff_c_54.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Portrait</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940077447-UYEWSHT1OH9HJLFQKZ0X/190316_CE_Edwards_c-3.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Editorial</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646953512839-SMMLA4488N6U3KID6YEO/210912_E_GisellePaolo_49.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Events</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646954919642-IW3DFYWU3PCVIIBXOJ2C/191017_LeslieGordon_c-21.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Portrait</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940220997-GFY9M6AB5004TB6X2WHC/190609_Aklile_C_22.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Creative</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415526650-6D5V0UQ9IXDUW31AF9OY/190525_Stern_c_30.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Portrait</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415414439-69VSU1EVOEK4CNL56GM4/180410_DeShae_05_NoCrop.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Studio</span></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646959459040-EHF3JM1B3ZXKHL87HC7F/190707_O_Cann_01.jpg" alt="Photography" loading="lazy">
+                <div class="gallery-overlay"><span>Lifestyle</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services-section">
+        <div class="section-header fade-in">
+            <span class="section-label">What I Do</span>
+            <h2>Services</h2>
+            <p>Entertainment, performance, and creative ventures</p>
+        </div>
+        <div class="services-grid fade-in">
+            <div class="service-card">
+                <div class="service-card-img">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/d6660712-d51c-4a9c-9ace-6166e81e4586/9.jpg" alt="Fire Performer" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <h3>Fire Performance</h3>
+                    <p>Captivating fire performances for events and productions, bringing energy and artistry to every show.</p>
+                    <a href="https://www.vividfluidity.com/fireperformer" class="card-link" target="_blank">Learn More &rarr;</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-card-img">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/855c2e13-4270-4d95-a8da-f1882d7287c4/210124_O_FC_Ash_02.jpg" alt="Fitness" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <h3>Fitness</h3>
+                    <p>Dedicated to health and wellness with a holistic approach to strength and movement.</p>
+                    <a href="https://www.vividfluidity.com/fitness1" class="card-link" target="_blank">Learn More &rarr;</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-card-img">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/ece97a6c-3a5d-4d82-9aaf-2f2527ee0c38/220508_PinkPhoneBooth_WEB.gif" alt="Photobooth Rentals" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <h3>Photobooth Rentals</h3>
+                    <p>Premium photobooth experiences for weddings, corporate events, and private parties.</p>
+                    <a href="https://www.bdaphotobooths.com" class="card-link" target="_blank">Learn More &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOUSESITTING -->
+    <section id="housesitting" class="housesitting-section">
+        <div class="section-header fade-in">
+            <span class="section-label">Sustainability</span>
+            <h2>Vivid House Sitters</h2>
+            <p>Trusted care for your home and furry friends</p>
+        </div>
+        <div class="pet-grid fade-in">
+            <div class="pet-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/138599f5-8ec8-43b0-b8f4-81324d07a847/231031_Koda.jpg" alt="Koda" loading="lazy">
+            </div>
+            <div class="pet-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/33940cb4-c6fd-4dcb-bf41-20ec9180273a/Iggie_Cropped.jpg" alt="Iggie" loading="lazy">
+            </div>
+            <div class="pet-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/a3c25583-a4b1-43cf-99a6-3896f025fde8/Harley_Cropepd.jpg" alt="Harley" loading="lazy">
+            </div>
+            <div class="pet-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/86b78777-3ee0-497c-8d97-bf31466d2836/241129_Socks.jpg" alt="Socks" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+        <div class="fade-in">
+            <span class="section-label">Get in Touch</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); margin-bottom:1rem;">Say Hello</h2>
+            <p style="color:var(--muted); font-weight:300; max-width:500px; margin:0 auto 2rem;">
+                Interested in collaborating or booking? Reach out and let's create something vivid.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:Ashley@VividFluidity.com">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Email
+                </a>
+                <a href="https://www.instagram.com/vividfluidity" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                    Instagram
+                </a>
+                <a href="https://www.linkedin.com/in/ashleyorianna" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://www.facebook.com/vividfluidity" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    Facebook
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Vivid Fluidity. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
