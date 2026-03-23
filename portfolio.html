@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Portfolio — Vivid Fluidity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --fg: #f0ece6;
+            --accent: #d4a574;
+            --accent2: #e8836b;
+            --muted: #888;
+            --card-bg: #141414;
+            --border: #222;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.2rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--muted); transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--fg); }
+
+        .hamburger {
+            display: none; cursor: pointer;
+            flex-direction: column; gap: 5px;
+        }
+        .hamburger span {
+            width: 24px; height: 2px;
+            background: var(--fg); transition: 0.3s;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 0.75rem;
+        }
+
+        .page-header p {
+            color: var(--muted); font-weight: 300;
+            max-width: 500px; margin: 0 auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: var(--accent); margin-bottom: 1rem;
+        }
+
+        /* FILTER TABS */
+        .filter-tabs {
+            display: flex; justify-content: center; gap: 1rem;
+            flex-wrap: wrap;
+            padding: 0 2rem 3rem;
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.8rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--muted);
+            cursor: pointer; transition: all 0.3s;
+            background: none;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            border-color: var(--accent); color: var(--accent);
+        }
+
+        /* GALLERY */
+        .portfolio-section {
+            max-width: 1400px; margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+
+        .portfolio-item {
+            position: relative; overflow: hidden;
+            border-radius: 4px; aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s, filter 0.6s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05); filter: brightness(0.7);
+        }
+
+        .portfolio-overlay {
+            position: absolute; inset: 0;
+            display: flex; align-items: flex-end;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+        .portfolio-overlay span {
+            font-size: 0.8rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.95);
+            align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox img {
+            max-width: 90vw; max-height: 90vh;
+            object-fit: contain; border-radius: 4px;
+        }
+
+        .lightbox-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            font-size: 2rem; color: var(--fg);
+            cursor: pointer; background: none; border: none;
+            line-height: 1;
+        }
+
+        /* BACK LINK */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border); border-radius: 4px;
+            font-size: 0.8rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--muted); transition: all 0.3s;
+            margin-top: 1.5rem;
+        }
+
+        .back-link:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* FOOTER */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        footer p { color: var(--muted); font-size: 0.85rem; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.active {
+                display: flex; flex-direction: column;
+                position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10,10,10,0.95);
+                backdrop-filter: blur(20px);
+                padding: 2rem; gap: 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="logo">Vivid <span>Fluidity</span></a>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <span class="section-label">Portfolio</span>
+        <h1>Photography</h1>
+        <p>Capturing moments with intention and artistry</p>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="portrait">Portrait</button>
+        <button class="filter-tab" data-filter="editorial">Editorial</button>
+        <button class="filter-tab" data-filter="events">Events</button>
+        <button class="filter-tab" data-filter="creative">Creative</button>
+        <button class="filter-tab" data-filter="studio">Studio</button>
+        <button class="filter-tab" data-filter="lifestyle">Lifestyle</button>
+    </div>
+
+    <!-- PORTFOLIO GRID -->
+    <div class="portfolio-section">
+        <div class="portfolio-grid fade-in">
+            <!-- Portrait -->
+            <div class="portfolio-item" data-category="portrait">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646948638006-Y4NS2SCPO5CTWBB8PZTT/190729_Graff_c_54.jpg" alt="Portrait — Graff" loading="lazy">
+                <div class="portfolio-overlay"><span>Portrait</span></div>
+            </div>
+            <div class="portfolio-item" data-category="portrait">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646954919642-IW3DFYWU3PCVIIBXOJ2C/191017_LeslieGordon_c-21.jpg" alt="Portrait — Leslie Gordon" loading="lazy">
+                <div class="portfolio-overlay"><span>Portrait</span></div>
+            </div>
+            <div class="portfolio-item" data-category="portrait">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415526650-6D5V0UQ9IXDUW31AF9OY/190525_Stern_c_30.jpg" alt="Portrait — Stern" loading="lazy">
+                <div class="portfolio-overlay"><span>Portrait</span></div>
+            </div>
+
+            <!-- Editorial -->
+            <div class="portfolio-item" data-category="editorial">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940077447-UYEWSHT1OH9HJLFQKZ0X/190316_CE_Edwards_c-3.jpg" alt="Editorial — Edwards" loading="lazy">
+                <div class="portfolio-overlay"><span>Editorial</span></div>
+            </div>
+
+            <!-- Events -->
+            <div class="portfolio-item" data-category="events">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646953512839-SMMLA4488N6U3KID6YEO/210912_E_GisellePaolo_49.jpg" alt="Events — Giselle Paolo" loading="lazy">
+                <div class="portfolio-overlay"><span>Events</span></div>
+            </div>
+
+            <!-- Creative -->
+            <div class="portfolio-item" data-category="creative">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940220997-GFY9M6AB5004TB6X2WHC/190609_Aklile_C_22.jpg" alt="Creative — Aklile" loading="lazy">
+                <div class="portfolio-overlay"><span>Creative</span></div>
+            </div>
+
+            <!-- Studio -->
+            <div class="portfolio-item" data-category="studio">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415414439-69VSU1EVOEK4CNL56GM4/180410_DeShae_05_NoCrop.jpg" alt="Studio — DeShae" loading="lazy">
+                <div class="portfolio-overlay"><span>Studio</span></div>
+            </div>
+
+            <!-- Lifestyle -->
+            <div class="portfolio-item" data-category="lifestyle">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646959459040-EHF3JM1B3ZXKHL87HC7F/190707_O_Cann_01.jpg" alt="Lifestyle — Cann" loading="lazy">
+                <div class="portfolio-overlay"><span>Lifestyle</span></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="back-link">&larr; Back to Home</a>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+        <button class="lightbox-close">&times;</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Vivid Fluidity. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Fade-in observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Filter tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const filter = tab.dataset.filter;
+                document.querySelectorAll('.portfolio-item').forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        document.querySelectorAll('.portfolio-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const src = item.querySelector('img').src;
+                document.getElementById('lightbox-img').src = src;
+                document.getElementById('lightbox').classList.add('active');
+            });
+        });
+
+        // Mobile nav
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
