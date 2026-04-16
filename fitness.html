@@ -82,8 +82,8 @@
             margin-bottom: 4rem;
         }
 
-        .discipline.reverse { direction: rtl; }
-        .discipline.reverse > * { direction: ltr; }
+        .discipline.reverse .discipline-img { order: -1; }
+        .discipline.reverse .discipline-text { order: 1; }
 
         .discipline-img {
             aspect-ratio: 4/5;
@@ -97,6 +97,21 @@
         }
 
         .discipline-img:hover img { transform: scale(1.04); }
+
+        .discipline-img.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1917;
+            border: 1px solid var(--border);
+        }
+
+        .discipline-img.placeholder span {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--muted);
+        }
 
         .discipline-text h3 {
             font-family: var(--serif);
@@ -160,7 +175,8 @@
             .hamburger { display: flex; }
             .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(11,11,11,0.97); backdrop-filter: blur(24px); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border); }
             .discipline { grid-template-columns: 1fr; gap: 1.5rem; }
-            .discipline.reverse { direction: ltr; }
+            .discipline.reverse .discipline-img { order: 0; }
+            .discipline.reverse .discipline-text { order: 0; }
         }
     </style>
 </head>
@@ -199,17 +215,17 @@
             <div class="discipline-text">
                 <h3>Muay Thai</h3>
             </div>
-            <div class="discipline-img">
-                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/855c2e13-4270-4d95-a8da-f1882d7287c4/210124_O_FC_Ash_02.jpg" alt="Muay Thai" loading="lazy">
+            <div class="discipline-img placeholder">
+                <span>Photo coming soon</span>
             </div>
         </div>
 
         <div class="discipline reverse">
+            <div class="discipline-img placeholder">
+                <span>Photo coming soon</span>
+            </div>
             <div class="discipline-text">
                 <h3>Pole Artist</h3>
-            </div>
-            <div class="discipline-img">
-                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/d6660712-d51c-4a9c-9ace-6166e81e4586/9.jpg" alt="Pole Artist" loading="lazy">
             </div>
         </div>
 
@@ -217,8 +233,8 @@
             <div class="discipline-text">
                 <h3>Tumbling and Rhythmic Gymnastics</h3>
             </div>
-            <div class="discipline-img">
-                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1685000404728-7OGOTIPT45EGW1GNF6US/Ash_VIA_Galleribillede_WEB.jpg" alt="Tumbling and Rhythmic Gymnastics" loading="lazy">
+            <div class="discipline-img placeholder">
+                <span>Photo coming soon</span>
             </div>
         </div>
     </section>
