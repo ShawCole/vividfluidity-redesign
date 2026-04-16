@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivid Fluidity — Ashley Orianna</title>
+    <title>Photography — Vivid Fluidity</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -43,7 +43,6 @@
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
-            transition: transform 0.4s ease;
         }
 
         .logo {
@@ -75,55 +74,75 @@
             background: var(--fg); transition: 0.3s;
         }
 
-        /* ── HERO ── */
-        .hero {
-            height: 100vh; width: 100%;
-            position: relative; overflow: hidden;
+        /* ── CATEGORIES GRID ── */
+        .page-content {
+            padding: 7rem 2.5rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
-        .hero-bg {
-            position: absolute; inset: 0;
-            background: url('https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1c78cd54-49e7-41e2-beb6-3f96ca7c26c3/1%28WEB%29.jpg') center/cover no-repeat;
-            animation: heroSlow 25s ease-in-out infinite alternate;
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        @keyframes heroSlow {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            display: block;
         }
 
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(11,11,11,0.15) 0%,
-                rgba(11,11,11,0.1) 40%,
-                rgba(11,11,11,0.5) 80%,
-                rgba(11,11,11,0.85) 100%
-            );
+        .category-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease, filter 0.5s ease;
         }
 
-        .hero-text {
+        .category-card:hover img {
+            transform: scale(1.06);
+            filter: brightness(0.6);
+        }
+
+        .category-card .label {
             position: absolute;
-            bottom: 12%; right: 6%;
-            max-width: 520px;
-            text-align: right;
-            z-index: 2;
-            animation: fadeUp 1.2s ease 0.3s both;
-        }
-
-        .hero-text p {
+            bottom: 0; left: 0; right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
             font-family: var(--serif);
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            font-weight: 300;
-            font-style: italic;
-            line-height: 1.8;
-            color: rgba(237,232,225,0.9);
+            font-size: 1.3rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            transition: padding-bottom 0.4s ease;
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .category-card:hover .label {
+            padding-bottom: 2rem;
+        }
+
+        /* ── ABOUT SECTION ── */
+        .about-photography {
+            max-width: 800px;
+            margin: 5rem auto 0;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-photography h2 {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .about-photography p {
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 2;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
         }
 
         /* ── FOOTER ── */
@@ -131,7 +150,6 @@
             padding: 3.5rem 2rem;
             text-align: center;
             border-top: 1px solid var(--border);
-            background: var(--bg);
         }
 
         footer a.email {
@@ -141,17 +159,13 @@
             color: var(--accent);
             text-decoration: underline;
             text-underline-offset: 4px;
-            transition: color 0.3s;
         }
-
-        footer a.email:hover { color: var(--accent2); }
 
         footer .copy {
             color: var(--muted);
             font-size: 0.8rem;
             margin-top: 1rem;
             font-weight: 300;
-            letter-spacing: 0.05em;
         }
 
         /* ── MOBILE ── */
@@ -168,8 +182,24 @@
                 padding: 2rem; gap: 1.5rem;
                 border-bottom: 1px solid var(--border);
             }
-            .hero-text { right: 1.5rem; left: 1.5rem; text-align: right; }
+            .page-content { padding: 6rem 1rem 3rem; }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+            .category-card .label { font-size: 1rem; }
         }
+
+        @media (max-width: 480px) {
+            .categories-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -177,7 +207,7 @@
     <nav>
         <a href="index.html" class="logo">Vivid Fluidity</a>
         <div class="nav-links" id="navLinks">
-            <a href="photography.html">Photography</a>
+            <a href="photography.html" class="active">Photography</a>
             <a href="fire-performer.html">Fire Performer</a>
             <a href="fitness.html">Fitness</a>
             <a href="housesitting.html">HouseSitting</a>
@@ -200,13 +230,51 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-text">
-            <p>Ashley is a serial entrepreneur and business owner in the entertainment industry with a personal drive for sustainability and low impact living.</p>
+    <div class="page-content">
+        <div class="categories-grid fade-in">
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940077447-UYEWSHT1OH9HJLFQKZ0X/190316_CE_Edwards_c-3.jpg" alt="Couples" loading="lazy">
+                <div class="label">Couples</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646948638006-Y4NS2SCPO5CTWBB8PZTT/190729_Graff_c_54.jpg" alt="Proposal" loading="lazy">
+                <div class="label">Proposal</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646954919642-IW3DFYWU3PCVIIBXOJ2C/191017_LeslieGordon_c-21.jpg" alt="Engagement" loading="lazy">
+                <div class="label">Engagement</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646953512839-SMMLA4488N6U3KID6YEO/210912_E_GisellePaolo_49.jpg" alt="Wedding" loading="lazy">
+                <div class="label">Wedding</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1724940220997-GFY9M6AB5004TB6X2WHC/190609_Aklile_C_22.jpg" alt="Maternity" loading="lazy">
+                <div class="label">Maternity</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415526650-6D5V0UQ9IXDUW31AF9OY/190525_Stern_c_30.jpg" alt="Family" loading="lazy">
+                <div class="label">Family</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1644415414439-69VSU1EVOEK4CNL56GM4/180410_DeShae_05_NoCrop.jpg" alt="Headshots" loading="lazy">
+                <div class="label">Headshots</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1646959459040-EHF3JM1B3ZXKHL87HC7F/190707_O_Cann_01.jpg" alt="Events, Retreats, Festivals" loading="lazy">
+                <div class="label">Events, Retreats, Festivals</div>
+            </div>
+            <div class="category-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/1685000404728-7OGOTIPT45EGW1GNF6US/Ash_VIA_Galleribillede_WEB.jpg" alt="Conceptual" loading="lazy">
+                <div class="label">Conceptual</div>
+            </div>
         </div>
-    </section>
+
+        <div class="about-photography fade-in">
+            <h2>Ashley's Photography Career</h2>
+            <p>Ashley inherited her passion for capturing moments from her mother, who has always had a keen interest in capturing moments. After completing three years of studying business, Ashley decided to dive into photography, despite having little knowledge about cameras. She quickly developed a deep love for the art when her studies started at Media College Denmark in 2017 and became an apprentice at Two &amp; Quarter in Bermuda.</p>
+        </div>
+    </div>
 
     <footer>
         <a href="mailto:Ashley@VividFluidity.com" class="email">Ashley@VividFluidity.com</a>
@@ -214,6 +282,13 @@
     </footer>
 
     <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
         document.querySelectorAll('.nav-links a').forEach(a => {
             a.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('active');

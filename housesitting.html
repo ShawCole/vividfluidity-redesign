@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivid HouseSitters — Vivid Fluidity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0b0b0b; --fg: #ede8e1; --accent: #c9a87c; --accent2: #e07a5f;
+            --muted: #7a7672; --border: rgba(255,255,255,0.08);
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Outfit', sans-serif;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-height: 1.6; overflow-x: hidden; }
+        a { color: inherit; text-decoration: none; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.4rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(11,11,11,0.7); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+        .logo { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; letter-spacing: 0.06em; font-style: italic; }
+        .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+        .nav-links a { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.14em; color: var(--muted); transition: color 0.3s; text-transform: uppercase; }
+        .nav-links a:hover, .nav-links a.active { color: var(--fg); }
+        .nav-social { display: flex; gap: 1.2rem; margin-left: 1rem; }
+        .nav-social a { color: var(--muted); transition: color 0.3s; }
+        .nav-social a:hover { color: var(--accent); }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .hamburger span { width: 22px; height: 1.5px; background: var(--fg); }
+
+        /* PAGE CONTENT */
+        .page-content {
+            padding: 8rem 2.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* IMAGE GRID */
+        .house-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .house-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .house-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .house-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        footer { padding: 3.5rem 2rem; text-align: center; border-top: 1px solid var(--border); margin-top: 4rem; }
+        footer a.email { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+        footer .copy { color: var(--muted); font-size: 0.8rem; margin-top: 1rem; font-weight: 300; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links, .nav-social { display: none; }
+            .hamburger { display: flex; }
+            .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(11,11,11,0.97); backdrop-filter: blur(24px); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border); }
+            .page-content { padding: 6rem 1rem 3rem; }
+            .house-grid { grid-template-columns: 1fr; }
+        }
+
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Vivid Fluidity</a>
+        <div class="nav-links" id="navLinks">
+            <a href="photography.html">Photography</a>
+            <a href="fire-performer.html">Fire Performer</a>
+            <a href="fitness.html">Fitness</a>
+            <a href="housesitting.html" class="active">HouseSitting</a>
+            <a href="photobooth.html">Photobooth Rentals</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-social">
+            <a href="https://www.linkedin.com/in/ashleyorianna" target="_blank" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="https://www.instagram.com/vividfluidity" target="_blank" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.facebook.com/vividfluidity" target="_blank" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+        <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('active')"><span></span><span></span><span></span></div>
+    </nav>
+
+    <div class="page-content">
+        <h1 class="page-title fade-in">Vivid HouseSitters</h1>
+
+        <div class="house-grid fade-in">
+            <div class="house-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/138599f5-8ec8-43b0-b8f4-81324d07a847/231031_Koda.jpg" alt="House sitting" loading="lazy">
+            </div>
+            <div class="house-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/33940cb4-c6fd-4dcb-bf41-20ec9180273a/Iggie_Cropped.jpg" alt="House sitting" loading="lazy">
+            </div>
+            <div class="house-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/a3c25583-a4b1-43cf-99a6-3896f025fde8/Harley_Cropepd.jpg" alt="House sitting" loading="lazy">
+            </div>
+            <div class="house-card">
+                <img src="https://images.squarespace-cdn.com/content/v1/5ff5118aa7a72a4f384902bb/86b78777-3ee0-497c-8d97-bf31466d2836/241129_Socks.jpg" alt="House sitting" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="mailto:Ashley@VividFluidity.com" class="email">Ashley@VividFluidity.com</a>
+        <p class="copy">&copy; 2024 Vivid Fluidity</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+        });
+    </script>
+
+</body>
+</html>
